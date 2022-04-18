@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'menus',
     'accounts',
     'bootstrap5',
+    'rest_framework',
     'django_extensions',
     'django.contrib.admin',
     'django.contrib.auth',
