@@ -1,6 +1,7 @@
 // import './App.css';
 import React from "react";
 import { useState, useEffect } from "react";
+import MenuCreate from "./components/MenuCreate";
 
 function App() {
 	const [menus, setMenus] = useState([]);
@@ -28,15 +29,7 @@ function App() {
 				</div>
 			))}
 
-			<form action="http://127.0.0.1:8000/api/menus/" method="POST">
-				<label htmlFor="add_menu_title">메뉴명</label>
-				<input type="text" name="title" id="add_menu_title" />
-				<label htmlFor="add_menu_description">메뉴 설명</label>
-				<input type="text" name="description" id="add_menu_description" />
-				<label htmlFor="add_menu_score">호감도</label>
-				<input type="number" name="score" id="add_menu_score" />
-				<input type="submit" value="완료" />
-			</form>
+			<MenuCreate />
 		</div>
 	);
 }

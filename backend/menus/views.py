@@ -16,14 +16,8 @@ def menu_index(request):
         return Response(serializer.data)
     
     elif request.method=='POST':
-        print('##############POST 왔다#############')
-        print('request', request)
-        print('request.data', request.data)
-        print('request.data_json', json.dumps(request.data))
-        
-        if request.data[0].is_valid():
-            serializer = MenuSerializer(data=request.data)
-            print('##############데이터다#############', serializer.data)
-            if serializer.is_valid(raise_exception=True):
-                serializer.save()
+        serializer = MenuSerializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            print('serializer.data', serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
