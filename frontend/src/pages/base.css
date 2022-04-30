@@ -1,0 +1,49 @@
+.App {
+  font-family: 'IBM Plex Sans KR', sans-serif;
+  font-weight: 300;
+}
+
+.subtitle {
+  font-weight: 800;
+  font-size: 2.5em;
+  margin : 0.5em 0;
+  font-family: 'IBM Plex Sans KR', sans-serif;
+}
+
+.btn-row {
+  margin: 10px 0;
+  width: 100%;
+}
+
+.btn-half {
+  margin: 10px 0;
+  width: 50%;
+}
+
+.btn-quarter {
+  margin: 10px 0;
+  width: 25%;
+}
+
+.input-file-space {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  padding: 10px;
+  margin: 10px 0;
+  background-color: white;
+  border: 1px solid rgb(210, 210, 210);
+  border-radius: 5px;
+}
+
+@media screen and (max-width: 768px) {
+  .subtitle {
+    font-size: 2em;
+  }
+}
+
+@media screen and (max-width: 465px) {
+  .subtitle {
+    font-size: 1.5em;
+  }
+}

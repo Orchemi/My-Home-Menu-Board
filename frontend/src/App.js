@@ -1,73 +1,29 @@
-// import './App.css';
-import React from "react";
-import { useState, useEffect } from "react";
-import MenuCreate from "./components/MenuCreate";
+import "./App.css";
+import { Route, Routes, BrowserRouter } from "react-router-dom";
+import Home from "./pages/Home";
+import AddMenu from "./pages/AddMenu";
+import Login from "./pages/Login";
+import RandomMenu from "./pages/RandomMenu";
+import Nav from "./Nav";
+import NotFound from "./pages/NotFound";
+import _ from "lodash";
 
 function App() {
-	const [menus, setMenus] = useState([]);
-
-	const getMenus = async () => {
-		try {
-			const response = await fetch("http://127.0.0.1:8000/api/menus/");
-			const json = await response.json();
-			console.log(json);
-			setMenus(json);
-		} catch (e) {
-			console.log(e);
-		}
-	};
-	useEffect(() => {
-		getMenus();
-	}, []);
-
 	return (
-		<div>
-			{menus.map((item) => (
-				<div key={item.id}>
-					<h1>{item.title}</h1>
-					<h2>{item.score}</h2>
-				</div>
-			))}
+		<div className='App'>
+			<BrowserRouter>
+				<Nav />
+				<Routes>
+					<Route path='/' element={<Home />} exact={true}></Route>
+					<Route path='/add-menu' element={<AddMenu />}></Route>
+					<Route path='/random-menu' element={<RandomMenu />}></Route>
+					<Route path='/login' element={<Login />}></Route>
 
-			<MenuCreate />
+					<Route path='*' element={<NotFound />}></Route>
+				</Routes>
+			</BrowserRouter>
 		</div>
 	);
 }
-
-// class App extends Component {
-// 	state = {
-// 		menus: [],
-// 	};
-
-// 	async componentDidMount() {
-// 		try {
-// 			const res = await fetch("http://127.0.0.1:8000/api/menus/");
-// 			const menus = await res.json();
-// 			this.setState({
-// 				menus,
-// 			});
-// 		} catch (e) {
-// 			console.log(e);
-// 		}
-// 	}
-
-// 	render() {
-// 		return (
-// 			<div>
-// 				{this.state.menus.map((item) => (
-// 					<div key={item.id}>
-// 						<h1>{item.title}</h1>
-// 						<h2>{item.score}</h2>
-// 						<span>{item.description}</span>
-// 						<span></span>
-// 					</div>
-// 				))}
-
-// 					<form action=""></form>
-
-// 			</div>
-// 		);
-// 	}
-// }
 
 export default App;

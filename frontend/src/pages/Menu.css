@@ -1,0 +1,15 @@
+.menuImg {
+  width: 10vw;
+  border-radius: 10px;
+}
+
+.menu-card {
+  width: 500px;
+  height: 500px;
+  border: 1px solid rgb(253, 183, 183);
+}
+
+.menu-card-link {
+  color: black;
+  text-decoration: none;
+}

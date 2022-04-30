@@ -1,0 +1,9 @@
+#randomDice {
+  width: 10%;
+}
+
+#diceContainer {
+  position: fixed;
+  right: -26em;
+  bottom: 3em;
+}
