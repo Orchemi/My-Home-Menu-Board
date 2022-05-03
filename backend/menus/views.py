@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from .models import Menu
 from .serializers import MenuSerializer, MenuListSerializer
 from rest_framework.decorators import api_view
-from rest_framework import status
+from rest_framework import status, viewsets
 import json
     
     
@@ -21,3 +21,8 @@ def menu_index(request):
             serializer.save()
             print('serializer.data', serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    
+    
+class MenuIndexView(viewsets.ModelViewSet):
+    serializer_class = MenuSerializer()
+    queryset = Menu.objects.order_by('-pk')

@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import "./AddMenu.css";
+import axios from "axios";
 
 function AddMenu() {
 	const [menuTitle, setMenuTitle] = useState("");
@@ -8,6 +9,8 @@ function AddMenu() {
 	const [menuScore, setMenuScore] = useState(5);
 	const [menuCategoryVal1, setMenuCategoryVal1] = useState("육류");
 	const [menuCategoryVal2, setMenuCategoryVal2] = useState("한식");
+	const [menuImage, setMenuImage] = useState("");
+	const imgInput = useRef();
 
 	const onChangeMenuTitle = (event) => {
 		setMenuTitle(event.target.value);
@@ -29,6 +32,19 @@ function AddMenu() {
 		setMenuScore(event.target.value);
 	};
 
+	const onChangeMenuImage = async (event) => {
+		const formData = new FormData();
+		formData.append("menuImage", event.target.files[0]);
+
+		const config = {
+			Headers: {
+				"content-type": "multipart/form-data",
+			},
+		};
+
+		axios.post();
+	};
+
 	const onSubmit = (event) => {
 		event.preventDefault();
 		const addedMenu = {
@@ -37,6 +53,7 @@ function AddMenu() {
 			menuScore,
 			menuCategoryVal1,
 			menuCategoryVal2,
+			menuImage,
 		};
 
 		if (
@@ -48,6 +65,7 @@ function AddMenu() {
 			alert("등록되었습니다!");
 			setMenuTitle("");
 			setMenuDescription("");
+			setMenuImage("");
 			setMenuScore(5);
 		} else {
 			alert("취소되었습니다!");
@@ -110,7 +128,13 @@ function AddMenu() {
 				/>
 
 				<div className='input-file-space'>
-					<input type='file' className='form-control-file' />
+					<input
+						type='file'
+						className='form-control-file'
+						accept='image/*' // image 확장자만 선택적으로 업로드
+						ref={imgInput}
+						onChange={onChangeMenuImage}
+					/>
 				</div>
 				<input type='submit' value='추가' className='btn btn-primary btn-row' />
 			</form>

@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 
 function Menu({ id, title, imgSrc, score }) {
+	console.log(imgSrc);
 	const scoreStar = (score) => {
 		let stars = "";
 		for (let i = 0; i < score; i++) {
@@ -12,6 +13,7 @@ function Menu({ id, title, imgSrc, score }) {
 
 		return stars;
 	};
+	const URL = "http://127.0.0.1:8000/api/menus";
 
 	return (
 		<div
@@ -24,13 +26,18 @@ function Menu({ id, title, imgSrc, score }) {
 					style={{ textDecoration: "none", color: "black" }}
 					className='menu-card-link'
 				>
-					{/* <img src={imgSrc} alt={`${title} 사진`} className='menuImg' /> */}
 					<img
+						src={`${URL}${imgSrc}`}
+						alt={`${title} 사진`}
+						className='menuImg'
+						style={{ width: "300px", height: "300px" }}
+					/>
+					{/* <img
 						src='https://via.placeholder.com/300/fcb6c3/fff?text=Menu Image'
 						alt={`${title} 사진`}
 						className='menuImg'
 						style={{ borderRadius: "10px", boxShadow: "2px 2px 3px gray" }}
-					/>
+					/> */}
 					<h1 className='my-3'>{title}</h1>
 					<h2>{scoreStar(score)}</h2>
 				</Link>
