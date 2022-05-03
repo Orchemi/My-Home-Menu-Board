@@ -17,14 +17,14 @@ class MenuListSerializer(serializers.ModelSerializer):
         
 
 class MenuSerializer(serializers.ModelSerializer):
-    image_url = serializers.SerializerMethodField()
+    # image_url = serializers.SerializerMethodField()
     
     class Meta:
         model = Menu
-        fields = ('title', 'id', 'image', 'image_url',)
+        fields = '__all__'
         # fields = '__all__'
         
-    def get_image_url(self, menu):
-        request = self.context.get('request')
-        image_url = menu.image.url
-        return request.build_absolute_uri(image_url)
+    # def get_image_url(self, menu):
+    #     request = self.context.get('request')
+    #     image_url = menu.image.url
+    #     return request.build_absolute_uri(image_url)

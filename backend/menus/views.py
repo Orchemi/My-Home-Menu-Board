@@ -6,6 +6,7 @@ from .serializers import MenuSerializer, MenuListSerializer
 from rest_framework.decorators import api_view
 from rest_framework import status, viewsets
 import json
+from random import random, sample
     
     
 @api_view(['GET', 'POST'])
@@ -21,6 +22,16 @@ def menu_index(request):
             serializer.save()
             print('serializer.data', serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
+
+@api_view(['GET'])
+def random_menu(request):
+    menus = get_list_or_404(Menu)
+    random_menu = sample(menus, 1)[0]
+    serializer = MenuSerializer(random_menu)
+    return Response(serializer.data)
+    
     
     
 class MenuIndexView(viewsets.ModelViewSet):

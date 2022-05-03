@@ -12,6 +12,7 @@ router.register(r'menus', views.MenuIndexView, basename='menus')
 app_name = 'menus'
 urlpatterns = [
     path('', views.menu_index),
+    path('random_menu/', views.random_menu),
 ] 
 
 if settings.DEBUG:
