@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import "./RandomMenu.css";
 import "./base.css";
@@ -7,14 +7,18 @@ function RandomMenu() {
 	const URL = "http://127.0.0.1:8000/api/menus";
 	const PATH = "/random_menu/";
 	const [randomMenu, setRandomMenu] = useState([]);
-	useEffect(() => {
+
+	function randomPick() {
 		axios.get(`${URL}${PATH}`).then((res) => {
 			setRandomMenu(res.data);
 		});
+	}
+
+	useEffect(() => {
+		randomPick();
 	}, []);
 
-	const { id, title, score, image, description, category1, category2 } =
-		randomMenu;
+	const { title, score, image, description, category1, category2 } = randomMenu;
 
 	const scoreStar = (score) => {
 		let stars = "";
@@ -60,7 +64,9 @@ function RandomMenu() {
 						</h5>
 						<h2>{scoreStar(score)}</h2>
 					</div>
-					<button className='btn btn-primary btn-quarter'>다시 뽑기!</button>
+					<button className='btn btn-primary btn-quarter' onClick={randomPick}>
+						다시 뽑기!
+					</button>
 				</div>
 			</div>
 		</div>
