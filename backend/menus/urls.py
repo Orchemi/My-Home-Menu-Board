@@ -13,6 +13,7 @@ app_name = 'menus'
 urlpatterns = [
     path('', views.menu_index),
     path('random_menu/', views.random_menu),
+    path('menu/<int:menu_id>/', views.menu_detail),
 ] 
 
 if settings.DEBUG:

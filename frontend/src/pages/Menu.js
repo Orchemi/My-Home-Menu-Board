@@ -4,10 +4,10 @@ function Menu({ id, title, imgSrc, score }) {
 	const scoreStar = (score) => {
 		let stars = "";
 		for (let i = 0; i < score; i++) {
-			stars += "★";
+			stars += "🌝";
 		}
 		for (let i = score; i < 5; i++) {
-			stars += "☆";
+			stars += "🌚";
 		}
 
 		return stars;
@@ -36,12 +36,6 @@ function Menu({ id, title, imgSrc, score }) {
 							boxShadow: "4px 4px 5px gray",
 						}}
 					/>
-					{/* <img
-						src='https://via.placeholder.com/300/fcb6c3/fff?text=Menu Image'
-						alt={`${title} 사진`}
-						className='menuImg'
-						
-					/> */}
 					<h1 className='my-3'>{title}</h1>
 					<h2>{scoreStar(score)}</h2>
 				</Link>

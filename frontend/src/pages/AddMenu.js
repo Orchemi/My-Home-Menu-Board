@@ -1,15 +1,16 @@
-import { Link } from "react-router-dom";
 import { useState, useRef } from "react";
 import "./AddMenu.css";
 import axios from "axios";
 
 function AddMenu() {
+	const URL = "http://127.0.0.1:8000/api/menus";
 	const [menuTitle, setMenuTitle] = useState("");
 	const [menuDescription, setMenuDescription] = useState("");
 	const [menuScore, setMenuScore] = useState(5);
 	const [menuCategoryVal1, setMenuCategoryVal1] = useState("육류");
 	const [menuCategoryVal2, setMenuCategoryVal2] = useState("한식");
-	const [menuImage, setMenuImage] = useState("");
+	const formData = new FormData();
+	// const [menuImage, setMenuImage] = useState("");
 	const imgInput = useRef();
 
 	const onChangeMenuTitle = (event) => {
@@ -32,40 +33,43 @@ function AddMenu() {
 		setMenuScore(event.target.value);
 	};
 
-	const onChangeMenuImage = async (event) => {
-		const formData = new FormData();
-		formData.append("menuImage", event.target.files[0]);
-
-		const config = {
-			Headers: {
-				"content-type": "multipart/form-data",
-			},
-		};
-
-		axios.post();
+	const onChangeMenuImage = (event) => {
+		// formData.delete();
+		formData.append("file", event.target.files[0]);
+		// console.log(formData);
+		for (const keyValue of formData) console.log(keyValue);
 	};
 
 	const onSubmit = (event) => {
 		event.preventDefault();
-		const addedMenu = {
-			menuTitle,
-			menuDescription,
-			menuScore,
-			menuCategoryVal1,
-			menuCategoryVal2,
-			menuImage,
-		};
+		formData.append("title", menuTitle);
+		formData.append("description", menuDescription);
+		formData.append("score", menuScore);
+		formData.append("category1", menuCategoryVal1);
+		formData.append("category2", menuCategoryVal2);
+		for (const keyValue of formData) {
+			console.log(keyValue);
+		}
 
-		if (
-			window.confirm(
-				`메뉴를 등록하시겠습니까? \n\n[메뉴정보]\n메뉴설명 : ${menuDescription}\n메뉴평가 : ${menuScore}\n메뉴 카테고리1 : ${menuCategoryVal1}\n메뉴 카테고리2 : ${menuCategoryVal2}`
-			)
-		) {
-			console.log(addedMenu);
+		if (window.confirm("메뉴를 등록하시겠습니까?")) {
+			// 서버 요청
+			// axios({
+			// 	url: URL,
+			// 	headers: {
+			// 		// "X-CSRFToken": csrftoken,
+			// 		"Content-Type": "application/json",
+			// 	},
+			// 	method: "post",
+			// 	data: formData,
+			// });
+
+			// 등록 안내
 			alert("등록되었습니다!");
+
+			// 폼 초기화
 			setMenuTitle("");
 			setMenuDescription("");
-			setMenuImage("");
+			// setMenuImage("");
 			setMenuScore(5);
 		} else {
 			alert("취소되었습니다!");
