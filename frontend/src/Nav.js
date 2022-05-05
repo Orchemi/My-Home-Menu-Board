@@ -6,6 +6,7 @@ function Nav() {
 	const clickHamburger = (event) => {
 		console.log("hello");
 	};
+	const URL = "http://127.0.0.1:8000/api/accounts";
 
 	return (
 		<div id='Nav'>
@@ -22,9 +23,12 @@ function Nav() {
 					<span>랜덤 메뉴 추천</span>
 				</Link>
 				|
-				<Link to='/login' className='nav-item'>
+				{/* <Link to='/login' className='nav-item'>
 					LOGIN
-				</Link>
+				</Link> */}
+				<a className='nav-item' href={`${URL}/login`}>
+					LOGIN
+				</a>
 			</div>
 			<div className='nav-items-narrow'>
 				<span>
