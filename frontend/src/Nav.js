@@ -19,15 +19,15 @@ function Nav() {
 				</Link>
 				|
 				<Link to='/random-menu' className='nav-item'>
-					{/* <img src='img/dice.png' alt='random dice' id='randomDice' /> &nbsp; */}
 					<span>랜덤 메뉴 추천</span>
 				</Link>
 				|
-				{/* <Link to='/login' className='nav-item'>
-					LOGIN
-				</Link> */}
 				<a className='nav-item' href={`${URL}/login`}>
 					LOGIN
+				</a>
+				/
+				<a className='nav-item' href={`${URL}/logout`}>
+					LOGOUT
 				</a>
 			</div>
 			<div className='nav-items-narrow'>

@@ -33,7 +33,9 @@ def login(request):
 def logout(request):
     if request.user.is_authenticated:
         auth_logout(request)
-    return render(request, 'accounts/logout_success.html')
+        return render(request, 'accounts/logout_success.html')
+    else:
+        return render(request, 'accounts/already_logged_out.html')
 
 
 @require_http_methods(['GET', 'POST'])
