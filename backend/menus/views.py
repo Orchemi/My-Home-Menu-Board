@@ -11,23 +11,20 @@ from django.views.decorators.csrf import ensure_csrf_cookie
     
     
 @api_view(['GET', 'POST'])
-@ensure_csrf_cookie
 def menu_index(request):
-    menus = get_list_or_404(Menu)
+    order = request.query_params['order']
+    ascDesc = int(request.query_params['ascDesc'])
+    
+    if ascDesc:
+        if order[0] == '-':
+            order = order[1:]
+        else:
+            order = '-' + order
+    
+    menus = Menu.objects.order_by(order)
     if request.method=='GET':
         serializer = MenuListSerializer(menus, many=True)
         return Response(serializer.data)
-    
-    elif request.method=='POST':
-        print('#########################')
-        print(request.data)
-        print('#########################')
-        # serializer = MenuSerializer(data=request.data)
-        # if serializer.is_valid(raise_exception=True):
-        #     serializer.save()
-        #     print('serializer.data', serializer.data)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
-
 
 
 @api_view(['GET'])

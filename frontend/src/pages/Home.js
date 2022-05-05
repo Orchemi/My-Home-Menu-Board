@@ -6,16 +6,85 @@ import Menu from "./Menu";
 function Home() {
 	const URL = "http://127.0.0.1:8000/api/menus";
 	const [menus, setMenus] = useState([]);
+	const [order, setOrder] = useState("-pk");
+	const [ascDesc, setAscDesc] = useState("0");
+
+	// function getCookie(name) {
+	// 	let cookieValue = null;
+	// 	console.log(document.cookie);
+	// 	if (document.cookie && document.cookie !== "") {
+	// 		const cookies = document.cookie.split(";");
+	// 		for (let i = 0; i < cookies.length; i++) {
+	// 			const cookie = cookies[i].trim();
+	// 			// Does this cookie string begin with the name we want?
+	// 			if (cookie.substring(0, name.length + 1) === name + "=") {
+	// 				cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+	// 				break;
+	// 			}
+	// 		}
+	// 	}
+	// 	return cookieValue;
+	// }
+
 	useEffect(() => {
-		axios.get(URL).then((res) => {
+		// const csrftoken = getCookie("csrftoken");
+
+		// axios({
+		// 	method: "post",
+		// 	url: URL,
+		// 	headers: {
+		// 		"X-CSRFToken": csrftoken,
+		// 		"Content-Type": "application/json",
+		// 	},
+		// 	data: {
+		// 		order: order,
+		// 		ascDesc: ascDesc,
+		// 	},
+		// })
+		axios({
+			url: URL,
+			params: {
+				order: order,
+				ascDesc: ascDesc,
+			},
+		}).then((res) => {
 			setMenus(res.data);
+			console.log(order, ascDesc);
 		});
-	}, []);
+	}, [order, ascDesc]);
+
+	const onChangeAscDesc = (event) => {
+		event.preventDefault();
+		setAscDesc(event.target.value);
+	};
+
+	const onChangeOrder = (event) => {
+		event.preventDefault();
+		setOrder(event.target.value);
+	};
 
 	return (
 		<div>
 			<div className='container'>
-				<div className='row' id='filterSection'></div>
+				<div className='row' id='filterSection'>
+					<form>
+						<select
+							value={order}
+							name='order'
+							id='order'
+							onChange={onChangeOrder}
+						>
+							<option value='-pk'>최신순</option>
+							<option value='title'>가나다순</option>
+							<option value='-score'>평점순</option>
+						</select>
+
+						<select value={ascDesc} name='ascDesc' onChange={onChangeAscDesc}>
+							<option value='0'>오름차순</option>
+							<option value='1'>내림차순</option>
+						</select>
+					</form>
+				</div>
 				<div className='row' id='cardSection'>
 					{menus.map((menu) => (
 						<Menu

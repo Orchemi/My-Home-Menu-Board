@@ -9,7 +9,6 @@ function RandomMenu() {
 	const [randomMenu, setRandomMenu] = useState([]);
 
 	function randomPick() {
-		console.log(`${URL}${PATH}`);
 		axios.get(`${URL}${PATH}`).then((res) => {
 			setRandomMenu(res.data);
 		});
