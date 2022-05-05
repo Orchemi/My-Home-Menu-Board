@@ -9,7 +9,7 @@
 
 .random-menu-space {
   width: 100%;
-  height: auto;
+  min-height: 100vh;
 }
 
 
