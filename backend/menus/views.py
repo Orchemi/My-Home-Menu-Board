@@ -1,4 +1,5 @@
 from django.shortcuts import get_list_or_404, get_object_or_404, render, redirect
+from django.http import HttpResponse, JsonResponse
 # from rest_framework import generics
 from rest_framework.response import Response
 from .models import Menu
@@ -12,19 +13,38 @@ from django.views.decorators.csrf import ensure_csrf_cookie
     
 @api_view(['GET', 'POST'])
 def menu_index(request):
-    order = request.query_params['order']
-    ascDesc = int(request.query_params['ascDesc'])
+    if request.method == 'GET':
+        order = request.query_params['order']
+        ascDesc = int(request.query_params['ascDesc'])
+        
+        if ascDesc:
+            if order[0] == '-':
+                order = order[1:]
+            else:
+                order = '-' + order
+        
+        menus = Menu.objects.order_by(order)
+        if request.method=='GET':
+            serializer = MenuListSerializer(menus, many=True)
+            return Response(serializer.data)
     
-    if ascDesc:
-        if order[0] == '-':
-            order = order[1:]
-        else:
-            order = '-' + order
-    
-    menus = Menu.objects.order_by(order)
-    if request.method=='GET':
-        serializer = MenuListSerializer(menus, many=True)
-        return Response(serializer.data)
+    elif request.method=='POST':
+        print('########################')
+        data = request.data
+        print(data)
+        
+        menu = {}
+        menu['title'] = data['title']
+        menu['description'] = data['description']
+        menu['score'] = data['score']
+        menu['category1'] = data['category1']
+        menu['category2'] = data['category2']
+        menu['file'] = data['file']
+        print(data['file'])
+        serializer = MenuSerializer(data=menu)
+        if serializer.is_valid():
+            serializer.save()
+        return Response(data)
 
 
 @api_view(['GET'])
@@ -42,8 +62,16 @@ class MenuIndexView(viewsets.ModelViewSet):
     
     
     
-@api_view(['GET'])
+@api_view(['GET', 'DELETE'])
 def menu_detail(request, menu_id):
     menu = get_object_or_404(Menu, pk=menu_id)
-    serializer = MenuSerializer(menu)
-    return Response(serializer.data)
+    if request.method == 'GET':
+        serializer = MenuSerializer(menu)
+        return Response(serializer.data)
+    
+    elif request.method == 'DELETE':
+        menu.delete()
+        data = {
+            'message': '삭제되었습니다.'
+        }
+        return JsonResponse(data)

@@ -17,7 +17,6 @@ function Login() {
 	const onSubmitLogin = (event) => {
 		event.preventDefault();
 		const loginInfo = { ID, PW };
-		console.log(loginInfo);
 		setID("");
 		setPW("");
 	};

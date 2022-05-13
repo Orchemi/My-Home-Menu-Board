@@ -32,7 +32,9 @@
 
 ![메뉴 상세페이지 ver 0 3 pc](https://user-images.githubusercontent.com/86189596/167109169-8bdc3920-97cd-46cd-b2be-9dbb7b5ca0bb.jpg)
 
-- 
+- 개별 메뉴들의 상세 정보들이 모여있는 페이지이다. 점수부터 등록/수정일이 있다.
+- 배경이 심심해서 사진의 확대사진을 backgroundImage의 cover option으로 부여하였다.
+- 향후 Update/Delete 기능을 추가할 예정이다. axios의 put과 delete method에 대한 이해와 react/django api 적인 이해가 추가로 필요하다.
 
 <br>
 
@@ -51,7 +53,7 @@
 
 ### 랜덤 메뉴 추천
 
-![랜덤 메뉴 추천 ver 0 3 pc](https://user-images.githubusercontent.com/86189596/167109161-a1277b0a-bc6c-4e85-bd5e-dcc71ebf5c2c.jpg)
+![랜덤 추천 gif](https://user-images.githubusercontent.com/86189596/167266091-92167778-d218-45c3-9021-17bd9b0062e7.gif)
 
 - 선택에 어려움을 겪는 유저들을 위해 등록되어 있는 메뉴 중 임의로 메뉴를 추천해준다.
 - 디자인적으로 PC버전에서 메뉴 사진과 내용을 가로형으로 배치하는 방식으로 개선하는 것이 이후 개선 목표이다.
@@ -67,6 +69,16 @@
 - Django의 auth의 로그인 기능을 활용할 계획이다.
 - axios의 post method를 위한 crsfToken의 부여는 authenticated 상태에서만 가능하므로 django의 login 페이지로 이동했다가 로그인 성공 후 되돌아온다.
 - api로 구현하기에 인증 절차에 문제가 있어 현재는 목업 페이지로 존재한다.
+
+<br>
+
+### 정렬 필터
+
+![정렬 필터 ver 0 3 pc](https://user-images.githubusercontent.com/86189596/167265818-e07aeb3d-a95f-4ce8-a2a8-f36724e7d3ec.gif)
+
+- 메뉴가 많아지면 여러 정렬 필터 기준을 이용해 오름차순/내림차순 정렬할 수 있도록 하였다.
+- select 태그의 onChange에 각각의 state를 해당 option의 value로 바꾸는 로직을 React 차원에서 구현하였고, useEffect를 이용해 각 state의 값이 바뀌면 해당 state를 params로 get 요청을 django 서버로 전송하였다.
+- django에서는 이를 받아 처리하는데, 오름차순/내림차순, option의 value에 따라 orm의 order_by 기준을 달리 넣어 api로 다시 response하였다.
 
 <br>
 

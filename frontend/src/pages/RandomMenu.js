@@ -18,7 +18,11 @@ function RandomMenu() {
 		randomPick();
 	}, []);
 
-	const { title, score, image, description, category1, category2 } = randomMenu;
+	let { title, score, image, description, category1, category2 } = randomMenu;
+
+	if (!image) {
+		image = "/media/images/no_image.png";
+	}
 
 	const scoreStar = (score) => {
 		let stars = "";

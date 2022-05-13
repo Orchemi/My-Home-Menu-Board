@@ -1,17 +1,19 @@
 import { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import "./AddMenu.css";
 import axios from "axios";
 
 function AddMenu() {
-	const URL = "http://127.0.0.1:8000/api/menus";
+	const URL = "http://127.0.0.1:8000/api/menus/";
 	const [menuTitle, setMenuTitle] = useState("");
 	const [menuDescription, setMenuDescription] = useState("");
 	const [menuScore, setMenuScore] = useState(5);
 	const [menuCategoryVal1, setMenuCategoryVal1] = useState("육류");
 	const [menuCategoryVal2, setMenuCategoryVal2] = useState("한식");
-	const formData = new FormData();
 	// const [menuImage, setMenuImage] = useState("");
+	const formData = new FormData();
 	const imgInput = useRef();
+	const navigate = useNavigate();
 
 	const onChangeMenuTitle = (event) => {
 		setMenuTitle(event.target.value);
@@ -34,43 +36,63 @@ function AddMenu() {
 	};
 
 	const onChangeMenuImage = (event) => {
-		// formData.delete();
+		// console.log(event.target.files[0]);
 		formData.append("file", event.target.files[0]);
 		// console.log(formData);
-		for (const keyValue of formData) console.log(keyValue);
+		// for (const key of formData) {
+		// 	console.log(key);
+		// }
 	};
 
 	const onSubmit = (event) => {
 		event.preventDefault();
-		formData.append("title", menuTitle);
-		formData.append("description", menuDescription);
-		formData.append("score", menuScore);
-		formData.append("category1", menuCategoryVal1);
-		formData.append("category2", menuCategoryVal2);
-		for (const keyValue of formData) {
-			console.log(keyValue);
-		}
-
 		if (window.confirm("메뉴를 등록하시겠습니까?")) {
-			// 서버 요청
-			// axios({
-			// 	url: URL,
-			// 	headers: {
-			// 		// "X-CSRFToken": csrftoken,
-			// 		"Content-Type": "application/json",
-			// 	},
-			// 	method: "post",
-			// 	data: formData,
-			// });
+			formData.append("title", menuTitle);
+			formData.append("description", menuDescription);
+			formData.append("score", menuScore);
+			formData.append("category1", menuCategoryVal1);
+			formData.append("category2", menuCategoryVal2);
 
-			// 등록 안내
-			alert("등록되었습니다!");
+			function getCookie(name) {
+				let cookieValue = null;
+				if (document.cookie && document.cookie !== "") {
+					const cookies = document.cookie.split(";");
+					for (let i = 0; i < cookies.length; i++) {
+						const cookie = cookies[i].trim();
+						// Does this cookie string begin with the name we want?
+						if (cookie.substring(0, name.length + 1) === name + "=") {
+							cookieValue = decodeURIComponent(
+								cookie.substring(name.length + 1)
+							);
+							break;
+						}
+					}
+				}
+				return cookieValue;
+			}
+
+			const csrftoken = getCookie("csrftoken");
+
+			// 서버 요청
+			axios({
+				url: URL,
+				headers: {
+					"X-CSRFToken": csrftoken,
+					"Content-Type": "application/json",
+				},
+				method: "post",
+				data: formData,
+			});
 
 			// 폼 초기화
 			setMenuTitle("");
 			setMenuDescription("");
 			// setMenuImage("");
 			setMenuScore(5);
+
+			// 등록 안내
+			alert("등록되었습니다!");
+			navigate("/");
 		} else {
 			alert("취소되었습니다!");
 		}
@@ -106,7 +128,13 @@ function AddMenu() {
 					<option value='육류'>육류</option>
 					<option value='어류'>어류</option>
 					<option value='채소류'>채소류</option>
+					<option value='국류'>국류</option>
+					<option value='면류'>면류</option>
+					<option value='밥류'>밥류</option>
+					<option value='찌개류'>찌개류</option>
 					<option value='반찬류'>반찬류</option>
+					<option value='튀김류'>튀김류</option>
+					<option value='기타'>기타</option>
 				</select>
 
 				<select
@@ -118,6 +146,7 @@ function AddMenu() {
 					<option value='중식'>중식</option>
 					<option value='일식'>일식</option>
 					<option value='양식'>양식</option>
+					<option value='기타'>기타</option>
 				</select>
 
 				<input

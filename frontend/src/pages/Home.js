@@ -9,38 +9,22 @@ function Home() {
 	const [order, setOrder] = useState("-pk");
 	const [ascDesc, setAscDesc] = useState("0");
 
-	// function getCookie(name) {
-	// 	let cookieValue = null;
-	// 	console.log(document.cookie);
-	// 	if (document.cookie && document.cookie !== "") {
-	// 		const cookies = document.cookie.split(";");
-	// 		for (let i = 0; i < cookies.length; i++) {
-	// 			const cookie = cookies[i].trim();
-	// 			// Does this cookie string begin with the name we want?
-	// 			if (cookie.substring(0, name.length + 1) === name + "=") {
-	// 				cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-	// 				break;
-	// 			}
-	// 		}
-	// 	}
-	// 	return cookieValue;
-	// }
+	function getCookie(name) {
+		let cookieValue = null;
+		if (document.cookie && document.cookie !== "") {
+			const cookies = document.cookie.split(";");
+			for (let i = 0; i < cookies.length; i++) {
+				const cookie = cookies[i].trim();
+				if (cookie.substring(0, name.length + 1) === name + "=") {
+					cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+					break;
+				}
+			}
+		}
+		return cookieValue;
+	}
 
 	useEffect(() => {
-		// const csrftoken = getCookie("csrftoken");
-
-		// axios({
-		// 	method: "post",
-		// 	url: URL,
-		// 	headers: {
-		// 		"X-CSRFToken": csrftoken,
-		// 		"Content-Type": "application/json",
-		// 	},
-		// 	data: {
-		// 		order: order,
-		// 		ascDesc: ascDesc,
-		// 	},
-		// })
 		axios({
 			url: URL,
 			params: {
@@ -49,7 +33,6 @@ function Home() {
 			},
 		}).then((res) => {
 			setMenus(res.data);
-			console.log(order, ascDesc);
 		});
 	}, [order, ascDesc]);
 
@@ -66,7 +49,11 @@ function Home() {
 	return (
 		<div>
 			<div className='container'>
-				<div className='row' id='filterSection'>
+				<div
+					className='row'
+					id='filterSection'
+					style={{ margin: "2em 0", textAlign: "right" }}
+				>
 					<form>
 						<select
 							value={order}

@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 import { useEffect } from "react";
@@ -6,12 +6,14 @@ import { padStart } from "lodash";
 import "./MenuDetail.css";
 
 function MenuDetail() {
+	const navigate = useNavigate();
 	const URL = "http://127.0.0.1:8000/api/menus";
 	const menuId = useParams().id;
 	const [menuInfo, setMenuInfo] = useState({});
 	const loadMenuDetailInfo = () => {
 		axios.get(`${URL}/menu/${menuId}`).then((res) => {
 			const data = res.data;
+			console.log(data);
 			setMenuInfo(data);
 		});
 	};
@@ -32,7 +34,7 @@ function MenuDetail() {
 		return stars;
 	};
 
-	const {
+	let {
 		title,
 		score,
 		image,
@@ -42,6 +44,10 @@ function MenuDetail() {
 		created_at,
 		updated_at,
 	} = menuInfo;
+
+	if (!image) {
+		image = "/media/images/no_image.png";
+	}
 
 	function convertFromStringToDate(dateData) {
 		const dateInfo = new Date(dateData);
@@ -56,6 +62,21 @@ function MenuDetail() {
 
 	const created_at2 = convertFromStringToDate(created_at);
 	const updated_at2 = convertFromStringToDate(updated_at);
+
+	const deleteMenu = (event) => {
+		event.preventDefault();
+		if (window.confirm("정말 삭제하시겠습니까?")) {
+			axios({
+				method: "delete",
+				url: `${URL}/menu/${menuId}`,
+			})
+				.then((res) => {
+					alert("삭제가 완료되었습니다.");
+					navigate("/");
+				})
+				.catch("삭제에 실패했습니다.");
+		}
+	};
 
 	return (
 		<div>
@@ -88,6 +109,35 @@ function MenuDetail() {
 						<h2>{scoreStar(score)}</h2>
 						<p>등록 : {created_at2}</p>
 						<p>수정 : {updated_at2}</p>
+						<button
+							style={{
+								width: "80%",
+								padding: "0.3em",
+								margin: "0.3em",
+								backgroundColor: "crimson",
+								color: "white",
+								border: "none",
+								borderRadius: "5px",
+								boxShadow: "2px 2px 3px lightgray",
+							}}
+							onClick={deleteMenu}
+						>
+							삭제
+						</button>
+						{/* <button
+							style={{
+								width: "80%",
+								padding: "0.3em",
+								margin: "0.3em",
+								backgroundColor: "green",
+								color: "white",
+								border: "none",
+								borderRadius: "5px",
+								boxShadow: "2px 2px 3px lightgray",
+							}}
+						>
+							수정
+						</button> */}
 					</div>
 				</div>
 			</div>

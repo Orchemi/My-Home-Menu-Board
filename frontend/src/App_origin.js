@@ -10,10 +10,10 @@ function App() {
 		try {
 			const response = await fetch("http://127.0.0.1:8000/api/menus/");
 			const json = await response.json();
-			console.log(json);
+			// console.log(json);
 			setMenus(json);
 		} catch (e) {
-			console.log(e);
+			console.error(e);
 		}
 	};
 	useEffect(() => {

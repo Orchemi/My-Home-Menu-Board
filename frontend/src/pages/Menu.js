@@ -1,6 +1,10 @@
 import { Link } from "react-router-dom";
 
 function Menu({ id, title, imgSrc, score }) {
+	if (!imgSrc) {
+		imgSrc = "/media/images/no_image.png";
+	}
+
 	const scoreStar = (score) => {
 		let stars = "";
 		for (let i = 0; i < score; i++) {

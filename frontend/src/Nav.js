@@ -4,7 +4,7 @@ import Button from "react-bootstrap/Button";
 
 function Nav() {
 	const clickHamburger = (event) => {
-		console.log("hello");
+		// console.log("hello");
 	};
 	const URL = "http://127.0.0.1:8000/api/accounts";
 
