@@ -132,21 +132,21 @@
 // App.js 
 
 function App() {
-	return (
-		<div className='App'>
-			<BrowserRouter>
-				<Nav />
-				<Routes>
-					<Route path='/' element={<Home />} exact={true}></Route>
-					<Route path='/add-menu' element={<AddMenu />}></Route>
-					<Route path='/random-menu' element={<RandomMenu />}></Route>
-					<Route path='/login' element={<Login />}></Route>
+  return (
+    <div className='App'>
+      <BrowserRouter>
+        <Nav />
+        <Routes>
+          <Route path='/' element={<Home />} exact={true}></Route>
+          <Route path='/add-menu' element={<AddMenu />}></Route>
+          <Route path='/random-menu' element={<RandomMenu />}></Route>
+          <Route path='/login' element={<Login />}></Route>
 
-					<Route path='*' element={<NotFound />}></Route>
-				</Routes>
-			</BrowserRouter>
-		</div>
-	);
+          <Route path='*' element={<NotFound />}></Route>
+        </Routes>
+      </BrowserRouter>
+    </div>
+  );
 }
 ```
 
@@ -161,19 +161,19 @@ function App() {
 
 ```js
 function randomPick() {
-	axios.get(`${URL}${PATH}`).then((res) => {
-		setRandomMenu(res.data);
-	});
+  axios.get(`${URL}${PATH}`).then((res) => {
+    setRandomMenu(res.data);
+  });
 }
 
 useEffect(() => {
-	randomPick();
+  randomPick();
 }, []);
 
 ...
 
 <button className='btn btn-primary btn-quarter' onClick={randomPick}>
-	다시 뽑기!!
+  다시 뽑기!!
 </button>
 ```
 
