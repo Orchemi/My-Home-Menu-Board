@@ -173,7 +173,7 @@ useEffect(() => {
 ...
 
 <button className='btn btn-primary btn-quarter' onClick={randomPick}>
-	다시 뽑기!
+	다시 뽑기!!
 </button>
 ```
 
